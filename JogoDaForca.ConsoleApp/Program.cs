@@ -4,14 +4,14 @@ namespace JogoDaForca.ConsoleApp
 {
     internal class Program
     {
-        public static char proximaLetraParaAdivinhar()
+        private static char proximaLetraParaAdivinhar()
         {
             char letraParaAdivinhar = ' ';
 
             while (true)
             {
                 Console.Write("Digite uma letra para adivinhar a palavra: ");
-                letraParaAdivinhar = Convert.ToChar(Console.ReadLine());
+                letraParaAdivinhar = Convert.ToChar(Console.ReadLine()[0]);
 
                 if (Char.IsLetter(letraParaAdivinhar))
                 {
@@ -30,7 +30,8 @@ namespace JogoDaForca.ConsoleApp
 
             return Char.ToUpper(letraParaAdivinhar);
         }
-        static void Main(string[] args)
+
+        public static List<char> obterPalavraSorteada()
         {
             // Lista de palavras
             List<string> listaDePalavras = new List<string> {
@@ -45,6 +46,17 @@ namespace JogoDaForca.ConsoleApp
                     "BANANA",  "MANGABA",    "UVA",
                     "CAJÁ",    "MANGA",      "UVAIA"
                 };
+
+            // Escolhendo palavra sorteada
+            Random random = new Random();
+            int numeroParaEscolherAPalavraSorteada = random.Next(listaDePalavras.Count());
+            List<char> palavraSorteada = new List<char>();
+            palavraSorteada.AddRange(listaDePalavras[numeroParaEscolherAPalavraSorteada]);
+
+            return palavraSorteada;
+        }
+        static void Main(string[] args)
+        {
             char letraParaAdivinhar = ' ';
 
             while (true)
@@ -55,10 +67,7 @@ namespace JogoDaForca.ConsoleApp
                 string estadoDoJogo = "";
 
                 // Escolhendo palavra sorteada
-                Random random = new Random();
-                int numeroParaEscolherAPalavraSorteada = random.Next(0, 30);
-                List<char> palavraSorteada = new List<char>();
-                palavraSorteada.AddRange(listaDePalavras[numeroParaEscolherAPalavraSorteada]);
+                List<char> palavraSorteada = obterPalavraSorteada();
 
                 // Lista de todas as letras escolhidas pelo jogador
                 List<char> letrasEscolhidas = new List<char>();
